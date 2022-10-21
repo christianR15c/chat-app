@@ -4,9 +4,11 @@
 .App {
     min-height: 100vh;
     display: flex;
-    background-color: white;
+    background: linear-gradient(90deg, rgba(172, 217, 212, 1) 47%, rgba(211, 198, 224, 1) 100%);
     background-position: center;
+    /* background-image: url('./backgrnd.jpg'); */
     background-size: cover;
+    object-fit: cover;
 }
 
 ::-webkit-scrollbar {
