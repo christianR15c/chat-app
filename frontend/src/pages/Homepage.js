@@ -17,7 +17,7 @@ const Homepage = () => {
     }, [])
 
     return (
-        <Container maxW='xl' centerContent>
+        <Container maxW='xl' centerContent marginTop={'80px'}>
             <Box
                 d='flex'
                 p={3}
