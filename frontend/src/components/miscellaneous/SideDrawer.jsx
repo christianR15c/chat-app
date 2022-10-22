@@ -16,7 +16,8 @@ import {
     Tooltip,
     useDisclosure,
     Input,
-    useToast
+    useToast,
+    Spinner
 } from "@chakra-ui/react"
 import { Box, Text } from "@chakra-ui/layout"
 import { BellIcon, ChevronDownIcon } from '@chakra-ui/icons'
@@ -30,7 +31,7 @@ import UserListItem from "../userAvatar/UserListItem"
 
 const SideDrawer = () => {
 
-    const { user } = ChatState()
+    const { user, setSelectedChat, chats, setChats } = ChatState()
     const navigate = useNavigate()
     const { isOpen, onOpen, onClose } = useDisclosure()
     const toast = useToast()
@@ -45,14 +46,32 @@ const SideDrawer = () => {
         navigate('/')
     }
 
-    const accessChat = (userId) => {
+    const accessChat = async (userId) => {
         try {
             setLoadingChat(true)
             const config = {
-                // headers:
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: `Bearer ${user.token}`
+                }
             }
-        } catch (error) {
 
+            const { data } = await axios.post('/api/chat', { userId }, config)
+
+            if (!chats.find((c) => c._id === data._id)) setChats([data, ...chats])
+
+            setSelectedChat(data)
+            setLoadingChat(false)
+            onClose()
+        } catch (error) {
+            toast({
+                title: 'Failed to load chat',
+                status: 'error',
+                isClosable: true,
+                duration: 5000,
+                position: 'bottom-left'
+            })
+            setLoading(false)
         }
     }
 
@@ -72,8 +91,8 @@ const SideDrawer = () => {
 
             const config = {
                 headers: {
-                    Authorization: `Bearer ${user.token}`,
-                },
+                    Authorization: `Bearer ${user.token}`
+                }
             };
 
             const { data } = await axios.get(`/api/user?search=${search}`, config);
@@ -91,7 +110,7 @@ const SideDrawer = () => {
             setLoading(false)
         }
     }
-    searchResult && console.log('*** search result ****', searchResult)
+
     return (<>
         <Box
             display="flex"
@@ -174,6 +193,7 @@ const SideDrawer = () => {
                             />
                         ))
                     )}
+                    {loadingChat && <Spinner ml='auto' display='flex' />}
                 </DrawerBody>
 
                 <DrawerFooter>
