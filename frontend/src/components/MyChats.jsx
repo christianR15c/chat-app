@@ -5,8 +5,9 @@ import React, { useEffect, useState } from 'react';
 import { getSender } from '../config/chatLogics';
 import { ChatState } from '../context/ChatProvider';
 import ChatLoading from './ChatLoading';
+import GroupChatModal from './miscellaneous/GroupChatModal';
 
-const MyChats = () => {
+const MyChats = ({ relaodChats }) => {
 
     const [loggedUser, setLoggedUser] = useState()
     const { selectedChat, setSelectedChat, user, chats, setChats } = ChatState()
@@ -22,7 +23,6 @@ const MyChats = () => {
             }
             const { data } = await axios.get('/api/chat', config)
             setChats(data)
-            console.log(data)
         } catch (error) {
             toast({
                 title: 'Failed to load chats',
@@ -37,12 +37,12 @@ const MyChats = () => {
     useEffect(() => {
         setLoggedUser(JSON.parse(localStorage.getItem('userInfo')))
         fetchChats()
-    }, [])
+    }, [relaodChats])
 
 
     return (
         <Box
-            display={{ base: selectedChat ? "none" : "flex", lg: 'flex' }}
+            display={{ base: selectedChat ? "none" : "flex", md: 'flex' }}
             flexDir='column'
             alignItems='center'
             p={3}
@@ -62,13 +62,16 @@ const MyChats = () => {
                 alignItems='center'
             >
                 My Chats
-                <Button
-                    display='flex'
-                    fontSize={{ base: '17px', md: '10px', lg: '17px' }}
-                    rightIcon={<AddIcon />}
-                >
-                    New Group Chat
-                </Button>
+                <GroupChatModal>
+                    <Button
+                        display='flex'
+                        fontSize={{ base: '17px', md: '10px', lg: '17px' }}
+                        bg='#E0F2F1'
+                        rightIcon={<AddIcon />}
+                    >
+                        New Group Chat
+                    </Button>
+                </GroupChatModal>
             </Box>
             <Box
                 display='flex'

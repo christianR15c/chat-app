@@ -51,12 +51,7 @@ const Signup = () => {
             };
             const { data } = await axios.post(
                 "/api/user",
-                {
-                    name,
-                    email,
-                    password,
-                    pic,
-                },
+                { name, email, password, pic },
                 config
             );
             toast({
@@ -70,6 +65,7 @@ const Signup = () => {
             setPicLoading(false);
             navigate("/chats");
         } catch (error) {
+            console.log(error)
             toast({
                 title: "Error Occured!",
                 description: error.response.data.message,
@@ -182,7 +178,7 @@ const Signup = () => {
                 />
             </FormControl>
             <Button
-                colorScheme="blue"
+                colorScheme="green"
                 width="100%"
                 style={{ marginTop: 15 }}
                 onClick={submitHandler}

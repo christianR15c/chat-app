@@ -6,7 +6,7 @@
     display: flex;
     background: linear-gradient(90deg, rgba(172, 217, 212, 1) 47%, rgba(211, 198, 224, 1) 100%);
     background-position: center;
-    background-image: url('./images/background3.jpg');
+    background-image: url('./images/background2.jpg');
     background-size: cover;
     object-fit: cover;
 }
