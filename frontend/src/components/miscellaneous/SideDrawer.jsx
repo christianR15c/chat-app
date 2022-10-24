@@ -116,6 +116,7 @@ const SideDrawer = () => {
             display="flex"
             justifyContent='space-between'
             alignItems="center"
+            m={3}
         >
             <Tooltip
                 label='Search users to chat' hasArrow placement='bottom-end'
@@ -124,7 +125,8 @@ const SideDrawer = () => {
                     <BsSearch />
                     <Text
                         display={{ base: "none", md: "flex" }}
-                        px='4'>
+                        pl={2}
+                    >
                         Search User
                     </Text>
                 </Button>
