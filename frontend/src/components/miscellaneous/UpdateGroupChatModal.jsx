@@ -22,7 +22,7 @@ import UserBadgeItem from '../userAvatar/UserBadgeItem'
 import axios from 'axios'
 import UserListItem from '../userAvatar/UserListItem'
 
-const UpdateGroupChatModal = ({ relaodChats, setRelaodChats }) => {
+const UpdateGroupChatModal = ({ relaodChats, setRelaodChats, fetchMessages }) => {
 
     const { isOpen, onOpen, onClose } = useDisclosure()
     const [groupChatName, setGroupChatName] = useState('')
@@ -62,6 +62,7 @@ const UpdateGroupChatModal = ({ relaodChats, setRelaodChats }) => {
 
             userToRemove._id === user._id ? setSelectedChat() : setSelectedChat(data)
             setRelaodChats(!relaodChats)
+            fetchMessages()
             setLoading(false)
         } catch (error) {
             console.log(error);
