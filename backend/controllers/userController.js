@@ -25,6 +25,7 @@ const registerUser = asyncHandler(async (req, res) => {
             pic: user.pic,
             token: generateToken(user._id)
         })
+        return
     }
     else {
         res.status(400).json({ error: 'Failed to create the user' })
